@@ -1,9 +1,5 @@
 #시도군구 모듈
-import pyautogui
 import re
-from PIL import Image
-import pytesseract
-
 
 sidoo_idx_dic = { 
                     "강원특별자치도": 0, "경기도": 1, "경상남도": 2, 
@@ -105,6 +101,12 @@ def get_sidoo_gungoo_loc_idx(addr):
     return sidoo_loc_idx, gungoo_loc_idx, load_name, load_num
 
 
+""" 
+*ocr모듈로 화면에 있는 정보 가져와서 처리하는 로직
+
+from PIL import Image
+import pytesseract
+
 def get_addr_loc_idx(load_num):
 
     # 캡쳐
@@ -150,3 +152,5 @@ def get_low_donglee_loc_idx(low_donglee):
             return idx
     
     return -1
+
+""" 

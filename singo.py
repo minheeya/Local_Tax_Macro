@@ -44,29 +44,31 @@ class CorpSingo:
     def __init__(self, singo_input_data: dict):
         
         self.htx_reg_no     = singo_input_data.get("HTX_REG_NO"     , "")
+        self.tot_htax_amt   = singo_input_data.get("TOT_HTAX_AMT"   , "")
         self.corp_no        = singo_input_data.get("CORP_NO"        , "")
         self.corp_nm        = singo_input_data.get("CORP_NM"        , "")
         self.user_nm        = singo_input_data.get("USER_NM"        , "")
         self.hp_no          = singo_input_data.get("HP_NO"          , "")
         self.corp_addr      = singo_input_data.get("CORP_ADDR"      , "")
+        self.corp_lb_addr   = singo_input_data.get("CORP_LB_ADDR"   , "")
 
 
     def click_next_bt(self):
-        print("main 페이지 다음 버튼 클릭")
+        # main 페이지 다음 버튼 클릭
 
         pyautogui.click(CorpSingo.button_loc_dic.get("next"))
         time.sleep(0.5)
 
 
     def click_submit_bt(self):
-        print("제출버튼 클릭")
+        # 제출버튼 클릭
 
         pyautogui.moveTo(CorpSingo.button_loc_dic.get("submit"))
         time.sleep(0.5)
 
 
     def write_htx_singo_Info(self):
-        print("홈택스신고정보가져오기")
+        # 홈택스신고정보가져오기
 
         # [홈택스신고정보가져오기] 버튼 클릭
         pyautogui.click(CorpSingo.button_loc_dic.get("htx_singo_info_get"))
@@ -90,7 +92,7 @@ class CorpSingo:
 
 
     def write_basic_info(self):
-        print("신고인 정보, 특별징수의무자 인적사항 입력")
+        # 신고인 정보, 특별징수의무자 인적사항 입력
 
 
         # 특별징수의무자>상호
@@ -141,7 +143,7 @@ class CorpSingo:
 
     
     def check_cert(self):
-        print("실명인증")
+        # 실명인증
 
         pyautogui.click(CorpSingo.button_loc_dic.get("certification"))
         time.sleep(1)
@@ -151,7 +153,7 @@ class CorpSingo:
         
 
     def write_corp_addr(self):
-        print("사업장주소 검색 & 입력")
+        # 사업장주소 검색 & 입력
 
         # [우편번호검색] 클릭
         pyautogui.click(CorpSingo.button_loc_dic.get("post_no"))
@@ -166,7 +168,6 @@ class CorpSingo:
         pyautogui.click(CorpSingo.button_loc_dic.get("sido"))
         time.sleep(0.5)
 
-        print("sidoo_loc_idx: ", sidoo_loc_idx)
         pyautogui.click(550, 371 + 29 * sidoo_loc_idx)
         time.sleep(0.5)
         
@@ -175,7 +176,6 @@ class CorpSingo:
         pyautogui.click(CorpSingo.button_loc_dic.get("sigungoo"))
         time.sleep(0.5)
 
-        print("sidoo_loc_idx: ", gungoo_loc_idx)
         pyautogui.click(710, 371 + 28.5 * gungoo_loc_idx)
         time.sleep(0.5)
 
@@ -198,10 +198,23 @@ class CorpSingo:
         pyautogui.hotkey('ctrl', 'v')
         time.sleep(0.5)
 
+
         # 조회 버튼 클릭
         pyautogui.click(CorpSingo.button_loc_dic.get("addr_load"))
         time.sleep(0.5)
 
+
+        # 상세 주소 여러개인 경우 여기서 종료
+        if '-' in load_num:
+            return
+        
+
+        # 상세 주소 첫 번째 조회되는 것 클릭
+        pyautogui.doubleClick(720, 570)
+        time.sleep(1)
+
+
+        #--OCR 기능--#
 
         # 상세 주소 클릭
         #addr_loc_idx = sidoogungoo.get_addr_loc_idx(load_num)
@@ -217,6 +230,7 @@ class CorpSingo:
         #pyautogui.click((1125, 758 + 30 * low_donglee_idx))
         #time.sleep(1)
 
+
         return
 
 
@@ -230,6 +244,7 @@ class CorpSingo:
         #self.click_next_bt()
         #self.click_next_bt()
         #self.click_submit_bt()
+
         
 
 
