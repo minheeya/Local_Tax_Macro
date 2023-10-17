@@ -40,6 +40,13 @@ class CorpSingo:
                         "load_num"  : (510, 350)
                        }
     
+    
+    sido_sel_loc      = (550, 371)
+    sigungoo_sel_loc  = (710, 371)
+
+    sido_len        = 29
+    sigungoo_len    = 28.5
+    
 
     def __init__(self, singo_input_data: dict):
         
@@ -168,7 +175,8 @@ class CorpSingo:
         pyautogui.click(CorpSingo.button_loc_dic.get("sido"))
         time.sleep(0.5)
 
-        pyautogui.click(550, 371 + 29 * sidoo_loc_idx)
+        x, y = CorpSingo.sido_sel_loc
+        pyautogui.click(x, y + CorpSingo.sido_len * sidoo_loc_idx)
         time.sleep(0.5)
         
 
@@ -176,7 +184,8 @@ class CorpSingo:
         pyautogui.click(CorpSingo.button_loc_dic.get("sigungoo"))
         time.sleep(0.5)
 
-        pyautogui.click(710, 371 + 28.5 * gungoo_loc_idx)
+        x, y = CorpSingo.sigungoo_sel_loc
+        pyautogui.click(x, y + CorpSingo.sigungoo_len * gungoo_loc_idx)
         time.sleep(0.5)
 
 
