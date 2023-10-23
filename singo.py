@@ -60,14 +60,14 @@ class CorpSingo:
 
     def __init__(self, singo_input_data: dict):
         
-        self.htx_reg_no     = singo_input_data.get("HTX_REG_NO"     , "")
-        self.tot_htax_amt   = singo_input_data.get("TOT_HTAX_AMT"   , "")
-        self.corp_no        = singo_input_data.get("CORP_NO"        , "")
-        self.corp_nm        = singo_input_data.get("CORP_NM"        , "")
-        self.user_nm        = singo_input_data.get("USER_NM"        , "")
-        self.hp_no          = singo_input_data.get("HP_NO"          , "")
-        self.corp_addr      = singo_input_data.get("CORP_ADDR"      , "")
-        self.corp_lb_addr   = singo_input_data.get("CORP_LB_ADDR"   , "")
+        self.htx_reg_no     = singo_input_data.get("HTX_REG_NO"     , "") if singo_input_data.get("HTX_REG_NO")     != None else ""
+        self.tot_htax_amt   = singo_input_data.get("TOT_HTAX_AMT"   , "") if singo_input_data.get("TOT_HTAX_AMT")   != None else ""
+        self.corp_no        = singo_input_data.get("CORP_NO"        , "") if singo_input_data.get("CORP_NO")        != None else ""
+        self.corp_nm        = singo_input_data.get("CORP_NM"        , "") if singo_input_data.get("CORP_NM")        != None else ""
+        self.user_nm        = singo_input_data.get("USER_NM"        , "") if singo_input_data.get("USER_NM")        != None else ""
+        self.hp_no          = singo_input_data.get("HP_NO"          , "") if singo_input_data.get("HP_NO")          != None else ""
+        self.corp_addr      = singo_input_data.get("CORP_ADDR"      , "") if singo_input_data.get("CORP_ADDR")      != None else ""
+        self.corp_lb_addr   = singo_input_data.get("CORP_LB_ADDR"   , "") if singo_input_data.get("CORP_LB_ADDR")   != None else ""
 
 
     def click_next_bt(self):
@@ -133,7 +133,7 @@ class CorpSingo:
 
         #신고인정보>전화번호
         pyautogui.click(CorpSingo.input_loc_dic.get("singo_user_hpno"))
-        pyautogui.write(self.hp_no)
+        pyautogui.write(self.hp_no.replace("-", ""))
 
 
         #신고인정보>비밀번호
@@ -229,10 +229,40 @@ class CorpSingo:
     def singo(self):
 
         self.click_next_bt()
-        self.write_htx_singo_Info()
-        self.write_basic_info()
-        self.check_cert()
-        self.write_corp_addr()
+
+        try:
+            self.write_htx_singo_Info()
+        except Exception as e:
+            print("===== ", e, " =====")
+            print("===== 사업자 번호 또는 홈택스 접수번호를 확인해주세요. =====\n")
+            return
+        
+        
+        try:
+            self.write_basic_info()
+        except Exception as e:
+            print("===== ", e, " =====")
+            print("===== 신고인 정보를 확인해주세요 =====\n")
+            return
+
+
+        try:
+            self.check_cert()
+        except Exception as e:
+            print("===== ", e, " =====")
+            print("===== 사장님 정보를 확인해주세요 =====\n")
+            return
+
+
+        try:
+            self.write_corp_addr()
+        except Exception as e:
+            print("===== ", e, " =====")
+            print("===== 사업장 주소를 확인해주세요 =====")
+            print("===== 도로명 주소가 없다면 직접 입력해주세요 =====\n")
+            return
+
+
         #self.click_next_bt()
         #self.click_next_bt()
         #self.click_submit_bt()

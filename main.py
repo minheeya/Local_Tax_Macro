@@ -16,8 +16,9 @@ try:
     wb = openpyxl.load_workbook(file_path)
     ws = wb.active
 except Exception as e:
-    print(e)
+    print("===== ", e, " =====")
     print("===== 파일 제목과 시트를 확인해주세요 =====\n")
+    exit()
 
 
 # 카테고리는 1번째 row에 존재
@@ -41,10 +42,11 @@ while (row_num <= end_num):
     print("\n=====", end_num - row_num + 1, "개 남았습니다! ", "시작합니다 =====\n")
 
     target_info_tp = ws[row_num]
+
     target_info_dic = {
          
          "USER_NM":         target_info_tp[cate_idx_dic.get("이름")].value,
-         "HP_NO":           target_info_tp[cate_idx_dic.get("연락처")].value.replace("-", ""),
+         "HP_NO":           target_info_tp[cate_idx_dic.get("연락처")].value,
          "CORP_NM":         target_info_tp[cate_idx_dic.get("사업장명")].value,
          "CORP_NO":         target_info_tp[cate_idx_dic.get("사업자번호")].value,
          "CORP_ADDR":       target_info_tp[cate_idx_dic.get("도로명주소")].value,
